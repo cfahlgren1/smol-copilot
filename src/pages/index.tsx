@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import CodeMirror from "@uiw/react-codemirror";
 import { inlineSuggestion } from "codemirror-extension-inline-suggestion";
 import { EditorState } from "@codemirror/state";
@@ -67,7 +68,7 @@ export default function Home() {
         Smol<span className="text-red-600">Pilot</span>
       </h1>
       <p className="text-slate-800 italic text-sm mb-4 mt-2 text-center">
-        What if you had a 360M parameter model in your pocket?
+        What if you had a <Link className="text-black underline font-semibold" href="https://huggingface.co/HuggingFaceTB/SmolLM-360M" target="_blank">360M parameter model</Link> in your pocket?
       </p>
       {isLoading ? (
         <p className="text-center mt-4">{loadingStatus}</p>
