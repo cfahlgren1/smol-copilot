@@ -67,12 +67,12 @@ export default function Home() {
         Smol<span className="text-red-600">Pilot</span>
       </h1>
       <p className="text-slate-800 italic text-sm mb-4 mt-2 text-center">
-        What if you had a 350M parameter model in your pocket?
+        What if you had a 360M parameter model in your pocket?
       </p>
       {isLoading ? (
         <p className="text-center mt-4">{loadingStatus}</p>
       ) : (
-        <div className="flex justify-center mt-10">
+        <div className="flex flex-col items-center mt-10">
           <div className="w-full border-2 border-slate-200 shadow-2xl rounded-lg max-w-4xl">
             <CodeMirror
               placeholder="Type anything to suggest a word"
@@ -88,6 +88,9 @@ export default function Home() {
               ]}
             />
           </div>
+          <p className="text-slate-800 italic text-sm mt-2 text-center">
+            Keep in mind, this is a 360M parameter model, it's not Llama 3.1 405B 🤗
+          </p>
         </div>
       )}
     </div>
