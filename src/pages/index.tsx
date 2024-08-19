@@ -89,7 +89,7 @@ export default function Home() {
             />
           </div>
           <p className="text-slate-800 italic text-sm mt-2 text-center">
-            Keep in mind, this is a 360M parameter model, it's not Llama 3.1 405B 🤗
+            Keep in mind, this is a 360M parameter model, it&apos;s not Llama 3.1 405B 🤗
           </p>
         </div>
       )}
