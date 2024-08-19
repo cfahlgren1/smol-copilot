@@ -7,17 +7,6 @@ import { useState, useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const fetchRandomWord = async (state: EditorState): Promise<string> => {
-  if (state.doc.length === 0) {
-    return "";
-  }
-  const res = await fetch(
-    `https://random-word-api.herokuapp.com/word?number=5`
-  );
-  const data = await res.json();
-  return data.join(" ");
-};
-
 export default function Home() {
   const [engine, setEngine] = useState<webllm.MLCEngineInterface | null>(null);
   const [isLoading, setIsLoading] = useState(false);
