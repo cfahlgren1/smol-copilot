@@ -3,6 +3,7 @@ import Link from "next/link";
 import CodeMirror from "@uiw/react-codemirror";
 import { inlineSuggestion } from "codemirror-extension-inline-suggestion";
 import { EditorState } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
 import * as webllm from "@mlc-ai/web-llm";
 import { useState, useEffect } from "react";
 
@@ -85,7 +86,8 @@ export default function Home() {
                     return (await generateCompletion(content)) || "";
                   },
                   delay: 500
-                })
+                }),
+                EditorView.lineWrapping
               ]}
             />
           </div>
