@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.60",
     "@uiw/react-codemirror": "^4.23.0",
     "codemirror-extension-inline-suggestion": "^0.0.3",
     "next": "14.2.5",

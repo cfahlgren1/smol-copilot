@@ -1,8 +1,9 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import CodeMirror from "@uiw/react-codemirror";
 import { inlineSuggestion } from "codemirror-extension-inline-suggestion";
 import { EditorState } from "@codemirror/state";
+import * as webllm from "@mlc-ai/web-llm";
+import { useState, useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,59 @@ const fetchRandomWord = async (state: EditorState): Promise<string> => {
 };
 
 export default function Home() {
+  const [engine, setEngine] = useState<webllm.MLCEngineInterface | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState('');
+
+  useEffect(() => {
+    async function loadWebLLM() {
+      setIsLoading(true);
+      const initProgressCallback = (report: webllm.InitProgressReport) => {
+        setLoadingStatus(report.text);
+      };
+
+      const selectedModel = "SmolLM-360M-q016-MLC";
+      const appConfig: webllm.AppConfig = {
+        model_list: [{
+          model: `https://huggingface.co/cfahlgren1/SmolLM-360M-q016-MLC`,
+          model_id: 'SmolLM-360M-q016-MLC',
+          model_lib: `${webllm.modelLibURLPrefix}${webllm.modelVersion}/SmolLM-360M-Instruct-q0f16-ctx2k_cs1k-webgpu.wasm`,
+          overrides: { context_window_size: 2048 },
+        }],
+      };
+
+      try {
+        const newEngine = await webllm.CreateMLCEngine(selectedModel, {
+          appConfig,
+          initProgressCallback,
+          logLevel: "INFO",
+        });
+        setEngine(newEngine);
+      } catch (err) {
+        console.error(`Failed to load the model: ${(err as Error).message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadWebLLM();
+  }, []);
+
+  const generateCompletion = async (content: string) => {
+    if (!engine) return;
+
+    try {
+      const response = await engine.completions.create({
+        prompt: content,
+        max_tokens: 15,
+      });
+      return response.choices[0].text || "";
+    } catch (err) {
+      console.error(`Error: ${(err as Error).message}`);
+      return "";
+    }
+  };
+
   return (
     <div>
       <h1 className="text-6xl text-slate-800 mt-28 font-bold font-sans text-center">
@@ -26,22 +80,27 @@ export default function Home() {
       <p className="text-slate-800 italic text-sm mb-4 mt-2 text-center">
         What if you had a 350M parameter model in your pocket?
       </p>
-      <div className="flex justify-center mt-10">
-        <div className="w-full border-2 border-slate-200 shadow-2xl rounded-lg max-w-4xl">
-          <CodeMirror
-            placeholder="Type anything to suggest a word"
-            height="400px"
-            extensions={
-              [
+      {isLoading ? (
+        <p className="text-center mt-4">{loadingStatus}</p>
+      ) : (
+        <div className="flex justify-center mt-10">
+          <div className="w-full border-2 border-slate-200 shadow-2xl rounded-lg max-w-4xl">
+            <CodeMirror
+              placeholder="Type anything to suggest a word"
+              height="400px"
+              extensions={[
                 inlineSuggestion({
-                  fetchFn: fetchRandomWord,
+                  fetchFn: async (state: EditorState) => {
+                    const content = state.doc.toString();
+                    return (await generateCompletion(content)) || "";
+                  },
                   delay: 500
                 })
-              ]
-            }
-          />
+              ]}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
