@@ -75,9 +75,9 @@ export default function Home() {
         <p className="text-center mt-4">{loadingStatus}</p>
       ) : (
         <div className="flex flex-col items-center mt-10">
-          <div className="w-full border-2 border-slate-200 shadow-2xl rounded-lg max-w-4xl">
+          <div className="w-full border-2 border-slate-200 text-slate-800 font-bold font-mono shadow-2xl rounded-lg max-w-4xl">
             <CodeMirror
-              placeholder="Type anything to suggest a word"
+              placeholder="Start writing beautifully..."
               height="400px"
               extensions={[
                 inlineSuggestion({
@@ -85,14 +85,17 @@ export default function Home() {
                     const content = state.doc.toString();
                     return (await generateCompletion(content)) || "";
                   },
-                  delay: 500
+                  delay: 300
                 }),
                 EditorView.lineWrapping
               ]}
             />
           </div>
           <p className="text-slate-800 italic text-sm mt-2 text-center">
-            Keep in mind, this is a 360M parameter model, it&apos;s not Llama 3.1 405B 🤗
+            Keep in mind, this is a 360M parameter base model, it&apos;s not Llama 3.1 405B 🤗.
+          </p>
+          <p className="text-slate-800 italic text-sm mt-2 text-center">
+          It will say some funny things, hallucinate and repeat itself. Have fun!
           </p>
         </div>
       )}
