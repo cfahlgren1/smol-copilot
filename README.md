@@ -18,6 +18,8 @@ A demo of a 360M parameter model in your pocket. Showcasing what the future coul
 
 Yes, the model will hallucinate and repeat itself, but think about the possibilities and have a little fun!
 
+![SmolPilot Demo](./media/SmolPilot.gif)
+
 ## Why Smol Models?
 
 - **Runs Locally**: No need for expensive servers. Inference is done locally, which makes for low latency and low cost.
@@ -25,4 +27,3 @@ Yes, the model will hallucinate and repeat itself, but think about the possibili
 - **No Lock-In**: You can switch the model or provider easily.
 - **Customizable**: You could customize and have a model that is specific to your use case.
 
-![SmolPilot Demo](./media/SmolPilot.gif)
