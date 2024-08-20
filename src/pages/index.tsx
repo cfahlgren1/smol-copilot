@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import Link from "next/link";
 import CodeMirror from "@uiw/react-codemirror";
 import { inlineSuggestion } from "codemirror-extension-inline-suggestion";
@@ -6,8 +5,6 @@ import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import * as webllm from "@mlc-ai/web-llm";
 import { useState, useEffect } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [engine, setEngine] = useState<webllm.MLCEngineInterface | null>(null);
