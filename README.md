@@ -11,6 +11,8 @@ app_port: 3000
 
 # SmolPilot
 
+![SmolPilot Demo](./media/smol-complete.png)
+
 A demo of a 360M parameter model in your pocket. Showcasing what the future could look like with small language models in the browser.
 
 - Powered by [SmolLM-360M](https://huggingface.co/HuggingFaceTB/SmolLM-360M)
